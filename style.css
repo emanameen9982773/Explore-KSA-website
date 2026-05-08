@@ -1,3 +1,146 @@
 label {
     display: block;
 }
+
+/* General Reset and Body */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background: #f4f7f6;
+    direction: rtl; /* right to left for arabic */
+    line-height: 1.6;
+}
+
+/* Header & Navigation */
+header {
+    background: linear-gradient(135deg, #2c7a7b 0%, #2b6cb0 100%); /* Green-Blue Gradient */
+    padding: 1rem 0;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+nav ul {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+nav ul li a:hover, nav ul li a.active {
+    color: #a0aec0;
+}
+
+/* Main Container */
+main {
+    padding: 40px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* responssive design  */
+.regions_cards_container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+    gap: 25px;
+}
+
+/* single card styling */
+.region_card {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.region_card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+/* card icon */
+.region_card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover; /* Ensures images aren't stretched */
+}
+
+/* card body  */
+.card_body {
+    padding: 20px;
+    flex-grow: 1; 
+}
+
+.card_body h2 {
+    color: #2c7a7b;
+    margin-bottom: 10px;
+    font-size: 1.4rem;
+}
+
+.card_body p {
+    color: #718096;
+    font-size: 0.95rem;
+    height: 3.2em; 
+    overflow: hidden;
+    margin-bottom: 15px;
+}
+
+/* location, nature */
+.loc_natu {
+    display: flex;
+    gap: 10px;
+}
+
+.loc_natu span {
+    background: #edf2f7;
+    color: #2b6cb0;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+/* زر عرض التفاصيل */
+.view-btn {
+    text-align: center;
+    background: linear-gradient(120deg, #074229 100%, #4183ca 100%);
+    color: white;
+    text-decoration: none;
+    padding: 12px;
+    font-weight: bold;
+    border-radius: 0 0 15px 15px; /* Round only bottom corners */
+    transition: opacity 0.3s;
+}
+
+.view-btn:hover {
+    opacity: 0.9;
+}
+
+footer {
+    text-align: center;
+    padding: 30px;
+    background: #2d3748;
+    color: white;
+    margin-top: 40px;
+}
+
+/* message for empty data */
+.no-data {
+    grid-column: 1 / -1; /* Stretch across all columns */
+    text-align: center;
+    color: #a0aec0;
+    padding: 50px;
+}

@@ -1,9 +1,13 @@
 
+<?php
+include("../database_connection.php");
+ ?> 
 <!DOCTYPE html>
 <html lang="ar">
 
 <head>
-    <title>Region Gallary</title>
+    <title>معرض المناطق</title>
+    <link rel="stylesheet" href="../style.css">
 </head>
 
 <body>
@@ -12,18 +16,50 @@
         <div>
             <nav>
                 <ul>
-                    <li> <a href="index.html">الرئيسية</a></li>
-                    <li> <a hef="regionsGallary.php" class="active">معرض المناطق</a></li>
-                    <li> <a href="AdminLogin.php">دخول المشرف</a></li>
+                    <li> <a href="../index.html">الرئيسية</a></li>
+                    <li> <a href="regionsGallary.php" class="active">معرض المناطق</a></li>
+                    <li> <a href="../admin_pages/AdminLogin.php">دخول المشرف</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
     <main>
+        <div class="regions_cards_container">
+            <?php 
+            $query="SELECT * FROM Regions";
+            $regions = mysqli_query($conn,$query);
+
+            if(mysqli_num_rows($regions)>0){
+                while($region=mysqli_fetch_assoc($regions)){?>
+                    <div class="region_card">
+                        <img src="../image/<?php echo $region['icon_path'];?>" alt="الصورة الرئيسية للمنطقة">
+                        <div class="card_body">
+                            <h2><?php echo $region['region_name']; ?></h2>
+                            <p><?php echo $region['headline']; ?></p>
+
+                            <div class="loc_natu">
+                                <span><?php echo $region['location']." المملكة "; ?></span>
+                                <span><?php echo $region['nature']; ?></span>
+                            </div>
+                        </div>
+                        <a href="regionDetails.php?id=<?php echo $region['region_id']; ?>" class="view-btn">استكشف الآن</a>
+                        
+                    </div>
+                    
+                
+
+                <?php
+                }
+            }
+            else{
+                echo "<p class='no-data'>لا توجد مناطق لعرضها حالياً.</p>";
+            } ?>
+        </div>
     </main>
 
     <footer>  
+        <p>استكشف جمال المملكة</p>
     </footer>
 
 </body>
