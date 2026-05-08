@@ -11,6 +11,7 @@ include("database_connection.php") ;
 <body>
 
     <header>
+        <a href="../addContent.html">اضافة منطقة</a>
     </header>
 
     <main>
