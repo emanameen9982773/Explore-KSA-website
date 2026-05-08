@@ -1,10 +1,11 @@
 <?php
 
 
-include("database_connection.php");
+include("../database_connection.php");
 
 
 $region_name= $_POST['region_name'];
+$headline=$_POST['headline'];
 $nature=$_POST['nature'];
 $location=$_POST['location'];
 $description=$_POST['description'];
@@ -19,8 +20,8 @@ else{
     $icon_name="defaultIcon.png";
  
 }
-$query = "INSERT INTO Regions (region_name, nature, location, description, icon_path)
-          VALUES ('$region_name', '$nature', '$location', '$description', '$icon_name')";
+$query = "INSERT INTO Regions (region_name, headline, nature, location, description, icon_path)
+          VALUES ('$region_name', '$headline', '$nature', '$location', '$description', '$icon_name')";
 
 // 3. Proper try-catch block
 try {
