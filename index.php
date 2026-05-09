@@ -12,7 +12,7 @@ include("database_connection.php") ;
 
     <header>
         <a href="admin_pages/addContent.php">اضافة منطقة</a>
-        <a href="public_pages/regionGallary.php">معرض المناطق</a>
+        <a href="public_pages/regionsGallary.php">معرض المناطق</a>
     </header>
 
     <main>

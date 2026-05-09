@@ -290,3 +290,39 @@ footer {
     opacity: 0.95;
 }
 
+
+/*----------region details----------*/
+.details-container {
+     max-width: 1000px; 
+     margin: 40px auto; 
+     background: white; 
+     padding: 30px; 
+     border-radius: 20px; 
+     box-shadow: 0 5px 20px rgba(0,0,0,0.05); 
+    }
+
+
+.main-img {
+    width: 100%; height: 450px; 
+    object-fit: cover; 
+    border-radius: 15px; 
+    margin-bottom: 30px;
+ }
+.info-section { 
+    margin-bottom: 30px; 
+    border-bottom: 1px solid #eee; 
+    padding-bottom: 20px;
+ }
+
+.info-section h3 { 
+    color: #1f7964; 
+    margin-bottom: 15px;
+ }
+
+
+.grid-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; }
+.grid-list li { background: #f0f9f7; padding: 10px; border-radius: 8px; list-style: none; border-right: 4px solid #1f7964; }
+.extra-images { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 15px; margin-top: 20px; }
+.extra-images img { width: 100%; height: 200px; object-fit: cover; border-radius: 10px; }
+  
+

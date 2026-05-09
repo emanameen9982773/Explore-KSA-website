@@ -74,7 +74,7 @@ $regionCount = count($regions);
         <?php
           // after adding a new region successfully the dashboard page should be opened with a message
           if (isset($_GET['success']) && $_GET['success'] == 1) {
-              echo '<div class="alert-success">✅ &nbsp; تمت الإضافة بنجاح!</div>';
+              echo '<div id="alert-msg" class="alert-success">✅ &nbsp; تمت الإضافة بنجاح!</div>';
           }
         ?>
 
