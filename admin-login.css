@@ -1,0 +1,249 @@
+/* =========================================
+   admin-login.css  |  Explore KSA – Admin
+   ========================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap');
+
+/* ---------- Variables ---------- */
+:root {
+    --green-dark  : #1a4731;
+    --green-main  : #2d6a4f;
+    --green-mid   : #40916c;
+    --green-pale  : #d8f3dc;
+    --white       : #ffffff;
+    --bg          : #f4faf6;
+    --border      : #c4d4c8;
+    --text-dark   : #1e2e22;
+    --text-mid    : #4a5e50;
+    --error-bg    : #fff0f0;
+    --error-border: #e53e3e;
+    --error-text  : #c53030;
+    --radius      : 10px;
+    --shadow      : 0 10px 40px rgba(0,0,0,0.13);
+    --transition  : 0.22s ease;
+}
+
+/* ---------- Base ---------- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: 'Tajawal', sans-serif;
+    direction: rtl;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: var(--bg);
+    color: var(--text-dark);
+}
+
+/* ---------- Navbar ---------- */
+.navbar {
+    background: var(--green-dark);
+    height: 58px;
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 99;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.nav-brand {
+    color: var(--white);
+    font-size: 1.15rem;
+    font-weight: 800;
+}
+
+.nav-links { display: flex; gap: 0.5rem; }
+
+.nav-links a {
+    color: var(--green-pale);
+    text-decoration: none;
+    font-size: 0.92rem;
+    font-weight: 500;
+    padding: 0.35rem 0.9rem;
+    border-radius: 6px;
+    transition: background var(--transition), color var(--transition);
+}
+
+.nav-links a:hover {
+    background: rgba(255,255,255,0.14);
+    color: var(--white);
+}
+
+/* ---------- Main Wrapper ---------- */
+.login-wrapper {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 1rem;
+}
+
+/* ---------- Card ---------- */
+.login-card {
+    background: var(--white);
+    width: 100%;
+    max-width: 420px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    animation: fadeUp 0.35s ease both;
+}
+
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0);    }
+}
+
+/* ---------- Card Header ---------- */
+.card-header {
+    background: linear-gradient(135deg, var(--green-dark), var(--green-main));
+    padding: 1.6rem 2rem;
+    text-align: center;
+}
+
+.card-header h1 {
+    color: var(--white);
+    font-size: 1.4rem;
+    font-weight: 800;
+}
+
+/* ---------- Error Box ---------- */
+.error-box {
+    background: var(--error-bg);
+    border-right: 4px solid var(--error-border);
+    color: var(--error-text);
+    padding: 0.75rem 1.2rem;
+    font-size: 0.92rem;
+    font-weight: 600;
+    margin: 1.2rem 1.5rem 0;
+    border-radius: 6px;
+    animation: shake 0.38s ease;
+}
+
+@keyframes shake {
+    0%,100% { transform: translateX(0);   }
+    25%      { transform: translateX(-6px); }
+    75%      { transform: translateX(6px);  }
+}
+
+/* ---------- Form ---------- */
+form {
+    padding: 1.6rem 2rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.form-group label {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--text-mid);
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.7rem 0.95rem;
+    border: 2px solid var(--border);
+    border-radius: 7px;
+    font-family: 'Tajawal', sans-serif;
+    font-size: 0.98rem;
+    color: var(--text-dark);
+    background: #f8fbf8;
+    outline: none;
+    transition: border-color var(--transition), box-shadow var(--transition);
+    direction: rtl;
+}
+
+.form-group input:focus {
+    border-color: var(--green-mid);
+    background: var(--white);
+    box-shadow: 0 0 0 3px rgba(64,145,108,0.15);
+}
+
+.form-group input.invalid {
+    border-color: var(--error-border);
+    background: var(--error-bg);
+}
+
+.form-group input::placeholder { color: #aabcb0; }
+
+/* ---------- Password Wrapper ---------- */
+.pass-wrap { position: relative; }
+
+.pass-wrap input { padding-left: 2.8rem; }
+
+#togglePass {
+    position: absolute;
+    left: 0.7rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    opacity: 0.55;
+    transition: opacity var(--transition);
+    line-height: 1;
+}
+
+#togglePass:hover { opacity: 1; }
+
+/* ---------- Field Error ---------- */
+.field-error {
+    font-size: 0.8rem;
+    color: var(--error-text);
+    font-weight: 600;
+    min-height: 1em;
+}
+
+/* ---------- Submit Button ---------- */
+.submit-btn {
+    width: 100%;
+    padding: 0.8rem;
+    margin-top: 0.3rem;
+    background: linear-gradient(135deg, var(--green-main), var(--green-mid));
+    color: var(--white);
+    border: none;
+    border-radius: 7px;
+    font-family: 'Tajawal', sans-serif;
+    font-size: 1.08rem;
+    font-weight: 800;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(45,106,79,0.35);
+    transition: transform var(--transition), box-shadow var(--transition), filter var(--transition);
+    letter-spacing: 0.04em;
+}
+
+.submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 7px 20px rgba(45,106,79,0.45);
+    filter: brightness(1.06);
+}
+
+.submit-btn:active   { transform: translateY(0); }
+.submit-btn:disabled { opacity: 0.65; cursor: not-allowed; transform: none; }
+
+/* ---------- Footer ---------- */
+.footer {
+    text-align: center;
+    padding: 1.2rem;
+    font-size: 0.85rem;
+    color: var(--text-mid);
+    border-top: 1px solid #e0ebe3;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 480px) {
+    .navbar { padding: 0 1rem; }
+    form    { padding: 1.4rem 1.3rem 1.8rem; }
+}
