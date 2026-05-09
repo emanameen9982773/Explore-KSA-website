@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once '../database_connection.php'; 
+require_once '../database_connection.php';
 
 $error = '';
 
@@ -10,7 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (!empty($username) && !empty($password)) {
         $sql = "SELECT id, username, password FROM admins WHERE username = ?";
-        
+
         if ($stmt = $conn->prepare($sql)) {
             $stmt->bind_param("s", $username);
             $stmt->execute();
@@ -18,12 +18,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             if ($result->num_rows == 1) {
                 $row = $result->fetch_assoc();
-                
-                // للتحقق من كلمة المرور 
+
+                // للتحقق من كلمة المرور
                 if ($password === $row['password']) {
-                    $_SESSION["loggedin"] = true;
-                    $_SESSION["admin_id"] = $row['id'];
-                    $_SESSION["admin_username"] = $row['username'];
+                    $_SESSION["loggedin"]        = true;
+                    $_SESSION["admin_id"]        = $row['id'];
+                    $_SESSION["admin_username"]  = $row['username'];
 
                     header("location: dashboard.php");
                     exit;
@@ -44,41 +44,74 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>تسجيل الدخول - الإدارة</title>
-    <link rel="stylesheet" href="../style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل الدخول - لوحة المشرف</title>
+    <link rel="stylesheet" href="admin-login.css">
 </head>
 <body>
-    <header>
-        <h1 style="text-align: center;">تسجيل دخول الإدارة</h1>
-    </header>
 
-    <main>
-        <div style="max-width: 400px; margin: 50px auto; padding: 20px; border: 1px solid #ccc; border-radius: 8px;">
-            
-            <?php 
-            if(!empty($error)){
-                echo '<div style="color: red; text-align: center; margin-bottom: 15px; font-weight: bold;">' . $error . '</div>';
-            }        
-            ?>
+    <!-- ===== Navbar ===== -->
+    <nav class="navbar">
+        <span class="nav-brand">لوحة المشرف</span>
+        <div class="nav-links">
+            <a href="../index.php">الصفحة الرئيسية</a>
+            <a href="../public_pages/regionsGallary.php">معرض المناطق</a>
+        </div>
+    </nav>
 
-            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-                <div style="margin-bottom: 15px;">
-                    <label style="display: block; margin-bottom: 5px;">اسم المستخدم:</label>
-                    <input type="text" name="username" required style="width: 100%; padding: 8px; box-sizing: border-box;">
-                </div>    
-                <div style="margin-bottom: 15px;">
-                    <label style="display: block; margin-bottom: 5px;">كلمة المرور:</label>
-                    <input type="password" name="password" required style="width: 100%; padding: 8px; box-sizing: border-box;">
+    <!-- ===== Login Card ===== -->
+    <main class="login-wrapper">
+        <div class="login-card">
+
+            <div class="card-header">
+                <h1>تسجيل دخول المشرف</h1>
+            </div>
+
+            <?php if (!empty($error)): ?>
+                <div class="error-box" id="errorBox">
+                    ⚠️ <?= htmlspecialchars($error) ?>
                 </div>
-                <div>
-                    <button type="submit" style="width: 100%; padding: 10px; background-color: #2c3e50; color: white; border: none; border-radius: 4px; cursor: pointer;">دخول</button>
+            <?php endif; ?>
+
+            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" id="loginForm">
+
+                <div class="form-group">
+                    <label for="username">اسم المستخدم</label>
+                    <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        placeholder="مثال: admin"
+                        value="<?= htmlspecialchars($_POST['username'] ?? '') ?>"
+                    >
+                    <span class="field-error" id="usernameErr"></span>
                 </div>
+
+                <div class="form-group">
+                    <label for="password">كلمة المرور</label>
+                    <div class="pass-wrap">
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="••••••••"
+                        >
+                        <button type="button" id="togglePass" title="إظهار / إخفاء">👁️</button>
+                    </div>
+                    <span class="field-error" id="passwordErr"></span>
+                </div>
+
+                <button type="submit" class="submit-btn" id="submitBtn">دخول</button>
+
             </form>
         </div>
     </main>
 
-    <footer>
-        <p style="text-align: center; margin-top: 50px;">&copy; اكتشف السعودية</p>
+    <!-- ===== Footer ===== -->
+    <footer class="footer">
+        <p>© اكتشف السعودية &mdash; جامعة الملك سعود</p>
     </footer>
+
+    <script src="script.js"></script>
 </body>
 </html>
