@@ -17,17 +17,21 @@ if(!empty($icon_name)){
     move_uploaded_file($icon['tmp_name'],$target_dir.$icon_name);
 }
 else{
-    $icon_name="defaultIcon.png";
+    $icon_name="defaultIcon.webp";
  
 }
 $query = "INSERT INTO Regions (region_name, headline, nature, location, description, icon_path)
           VALUES ('$region_name', '$headline', '$nature', '$location', '$description', '$icon_name')";
 
-// 3. Proper try-catch block
 try {
     mysqli_query($conn, $query);
 } 
 catch (mysqli_sql_exception $e) { 
+    // if the region already exists
+    if($e -> getCode()==1062){
+        header("location: addContent.html?error=duplicate");
+        exit();
+    }
     header("location: addContent.html?success=0");
     exit();
 }
