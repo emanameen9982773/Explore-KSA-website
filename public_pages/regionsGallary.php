@@ -13,7 +13,7 @@ include("../database_connection.php");
         <div>
             <nav>
                 <ul>
-                    <li> <a href="../index.html">الرئيسية</a></li>
+                    <li> <a href="../index.php">الرئيسية</a></li>
                     <li> <a href="regionsGallary.php" class="active">معرض المناطق</a></li>
                     <li> <a href="../admin_pages/AdminLogin.php">دخول المشرف</a></li>
                 </ul>
