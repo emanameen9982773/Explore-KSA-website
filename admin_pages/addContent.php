@@ -88,7 +88,7 @@
 
             <div class="admin-form-group">
                 <label for="icon">الصورة الرئيسية للمنطقة</label>
-                <input type="file" id="icon" name="icon" accept="image/*" required>
+                <input type="file" id="icon" name="icon" accept="image/*" >
             </div>
 
             <div class="admin-form-group">

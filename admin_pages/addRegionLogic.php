@@ -29,10 +29,10 @@ try {
 catch (mysqli_sql_exception $e) { 
     // if the region already exists
     if($e -> getCode()==1062){
-        header("location: addContent.html?error=duplicate");
+        header("location: addContent.php?error=duplicate");
         exit();
     }
-    header("location: addContent.html?success=0");
+    header("location: addContent.php?success=0");
     exit();
 }
 
