@@ -22,6 +22,31 @@ include("../database_connection.php");
     </header>
 
     <main class="gallery-page-main">
+        <section class="filter-section">
+            <input type="text" id="searchInput" placeholder="ابحث عن اسم المنطقة..." onkeyup="filterRegions()">
+
+            <select id="locationFilter" onchange="filterRegions()">
+                
+                <option value="">جميع المواقع</option>
+                <option value="شمال">شمال المملكة</option>
+                <option value="جنوب">جنوب المملكة</option>
+                <option value="شرق">شرق المملكة</option>
+                <option value="غرب">غرب المملكة</option>
+                <option value="وسط">وسط المملكة</option>
+            </select>
+
+            <select id="natureFilter" onchange="filterRegions()">
+                
+                <option value="">جميع أنواع الطبيعة</option>
+                <option value="صحراوية">صحراوية</option>
+                <option value="جبلية">جبلية</option>
+                <option value="ساحلية">ساحلية</option>
+                <option value="زراعية">زراعية/ريفية</option>
+                <option value="بركانية">بركانية</option>
+                <option value="جزيرة">جزيرة</option>
+            </select>
+        </section>
+
         <div class="regions_cards_container gallery-grid-container">
             <?php 
             $query="SELECT * FROM Regions";
@@ -55,7 +80,7 @@ include("../database_connection.php");
     <footer>  
         <p>استكشف جمال المملكة &copy; 2026</p>
     </footer>
-
+    <script src=script.js></script>
 </body>
 
 </html>

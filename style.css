@@ -172,6 +172,33 @@ footer {
     font-size: 1.2rem;
 }
 
+.filter-section {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 40px;
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    flex-wrap: wrap;
+}
+
+.filter-section input, .filter-section select {
+    padding: 12px 15px;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    flex: 1;
+    min-width: 200px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.filter-section input:focus, .filter-section select:focus {
+    border-color: #08482d;
+}
+
+
 
 /* -------------- Add content page Styles ------------*/
 
