@@ -1,7 +1,36 @@
-   //script.js  |  Explore KSA – Admin Pages
+// script.js  |  Explore KSA – Admin Pages
 
+// ==========================================
+// 1. NIGHT MODE (Persists across all pages)
+// ==========================================
+function initNightMode() {
+    const body = document.body;
+    const nightModeBtn = document.querySelector('.night-mode-btn'); // Make sure your button has this class
 
-   // 1. ADD INPUT  (addContent.php)
+    // 1. Check local storage when ANY page loads
+    if (localStorage.getItem('explore_ksa_theme') === 'dark') {
+        body.classList.add('night-mode');
+    }
+
+    // 2. Listen for button clicks (if the button exists on the current page)
+    if (nightModeBtn) {
+        nightModeBtn.addEventListener('click', function () {
+            // Toggle the class on the body
+            body.classList.toggle('night-mode');
+            
+            // Save the new state to localStorage
+            if (body.classList.contains('night-mode')) {
+                localStorage.setItem('explore_ksa_theme', 'dark');
+            } else {
+                localStorage.setItem('explore_ksa_theme', 'light');
+            }
+        });
+    }
+}
+
+// ==========================================
+// 2. ADD INPUT (addContent.php)
+// ==========================================
 function addInput(btn) {
     const parent = btn.parentNode;
     const input  = parent.querySelector('input').cloneNode(true);
@@ -9,8 +38,9 @@ function addInput(btn) {
     parent.insertBefore(input, btn);
 }
 
-
-   //2. LOGIN FORM  (AdminLogin.php only)
+// ==========================================
+// 3. LOGIN FORM (AdminLogin.php only)
+// ==========================================
 function initLoginForm() {
     const form = document.getElementById('loginForm');
     if (!form) return; // not on the login page, stop here
@@ -23,11 +53,13 @@ function initLoginForm() {
     const submitBtn   = document.getElementById('submitBtn');
 
     /* Show / hide password */
-    toggleBtn.addEventListener('click', function () {
-        const isHidden        = passwordIn.type === 'password';
-        passwordIn.type       = isHidden ? 'text' : 'password';
-        toggleBtn.textContent = isHidden ? '🙈' : '👁️';
-    });
+    if(toggleBtn) {
+        toggleBtn.addEventListener('click', function () {
+            const isHidden        = passwordIn.type === 'password';
+            passwordIn.type       = isHidden ? 'text' : 'password';
+            toggleBtn.textContent = isHidden ? '🙈' : '👁️';
+        });
+    }
 
     /* Clear errors while typing */
     usernameIn.addEventListener('input', function () { clearErr(usernameIn, usernameErr); });
@@ -55,8 +87,7 @@ function initLoginForm() {
     });
 }
 
-
-   //HELPERS
+// HELPERS FOR LOGIN
 function showErr(input, span, msg) {
     input.classList.add('invalid');
     span.textContent = msg;
@@ -67,21 +98,30 @@ function clearErr(input, span) {
     span.textContent = '';
 }
 
+// ==========================================
+// 4. ALERTS (Auto-hide success/error messages)
+// ==========================================
+function initAlerts() {
+    const alertMsg = document.getElementById('alert-msg');
+    
+    if (alertMsg) {
+        setTimeout(function() {
+            // تأثير الاختفاء
+            alertMsg.style.transition = "opacity 1s ease";
+            alertMsg.style.opacity = "0";
+            
+            setTimeout(() => {
+                alertMsg.remove();
+            }, 1000);
+        }, 5000); 
+    }
+}
 
-   //INIT – single window.onload, runs everything
-window.onload = function () {
-
-    // Auto-hide alerts (dashboard, add, update pages)
-    const alerts = document.querySelectorAll('.alert'); // fix: querySelectorAll returns a list
-    alerts.forEach(function (alertMsg) {
-        setTimeout(function () {
-            alertMsg.style.transition = 'opacity 1s ease';
-            alertMsg.style.opacity    = '0';
-            setTimeout(function () { alertMsg.remove(); }, 1000);
-        }, 7000);
-    });
-
-    // Login form setup
+// ==========================================
+// INIT – Runs everything safely when the DOM loads
+// ==========================================
+document.addEventListener('DOMContentLoaded', function() {
+    initNightMode();
     initLoginForm();
-
-};
+    initAlerts();
+});
