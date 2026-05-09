@@ -69,19 +69,18 @@ function clearErr(input, span) {
 
 
    //INIT – single window.onload, runs everything
-window.onload = function () {
-
-    // Auto-hide alerts (dashboard, add, update pages)
-    const alerts = document.querySelectorAll('.alert'); // fix: querySelectorAll returns a list
-    alerts.forEach(function (alertMsg) {
-        setTimeout(function () {
-            alertMsg.style.transition = 'opacity 1s ease';
-            alertMsg.style.opacity    = '0';
-            setTimeout(function () { alertMsg.remove(); }, 1000);
-        }, 7000);
-    });
-
-    // Login form setup
-    initLoginForm();
-
+window.onload = function() {
+    const alertMsg = document.getElementById('alert-msg');
+    
+    if (alertMsg) {
+        setTimeout(function() {
+            // تأثير الاختفاء
+            alertMsg.style.transition = "opacity 1s ease";
+            alertMsg.style.opacity = "0";
+            
+            setTimeout(() => {
+                alertMsg.remove();
+            }, 1000);
+        }, 5000); 
+    }
 };

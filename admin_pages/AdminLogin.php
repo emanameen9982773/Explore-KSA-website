@@ -9,32 +9,42 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = trim($_POST['password']);
 
     if (!empty($username) && !empty($password)) {
-        $sql = "SELECT id, username, password FROM admins WHERE username = ?";
+        
+        // 1. FIXED: Removed 'id' and changed table name to 'Admins'
+        $sql = "SELECT username, password FROM Admins WHERE username = ?";
 
-        if ($stmt = $conn->prepare($sql)) {
-            $stmt->bind_param("s", $username);
-            $stmt->execute();
-            $result = $stmt->get_result();
+        // 2. FIXED: Added try...catch block to handle errors gracefully
+        try {
+            if ($stmt = $conn->prepare($sql)) {
+                $stmt->bind_param("s", $username);
+                $stmt->execute();
+                $result = $stmt->get_result();
 
-            if ($result->num_rows == 1) {
-                $row = $result->fetch_assoc();
+                if ($result->num_rows == 1) {
+                    $row = $result->fetch_assoc();
 
-                // للتحقق من كلمة المرور
-                if ($password === $row['password']) {
-                    $_SESSION["loggedin"]        = true;
-                    $_SESSION["admin_id"]        = $row['id'];
-                    $_SESSION["admin_username"]  = $row['username'];
+                    // للتحقق من كلمة المرور
+                    if ($password === $row['password']) {
+                        $_SESSION["loggedin"]       = true;
+                        
+                        // 3. FIXED: Removed $_SESSION["admin_id"] because the table has no ID column
+                        $_SESSION["admin_username"] = $row['username'];
 
-                    header("location: dashboard.php");
-                    exit;
+                        header("location: dashboard.php");
+                        exit;
+                    } else {
+                        $error = "كلمة المرور غير صحيحة.";
+                    }
                 } else {
-                    $error = "كلمة المرور غير صحيحة.";
+                    $error = "اسم المستخدم غير موجود.";
                 }
-            } else {
-                $error = "اسم المستخدم غير موجود.";
+                $stmt->close();
             }
-            $stmt->close();
+        } catch (mysqli_sql_exception $e) {
+            // This stops the white screen crash and shows the error in the red box
+            $error = "حدث خطأ في قاعدة البيانات: " . $e->getMessage(); 
         }
+        
     } else {
         $error = "الرجاء إدخال اسم المستخدم وكلمة المرور.";
     }
@@ -46,7 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تسجيل الدخول - لوحة المشرف</title>
-    <link rel="stylesheet" href="admin-login.css">
+    <link rel="stylesheet" href="../admin-login.css">
 </head>
 <body>
 
@@ -69,7 +79,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <?php if (!empty($error)): ?>
                 <div class="error-box" id="errorBox">
-                    ⚠️ <?= htmlspecialchars($error) ?>
+                    &#9888; <?= htmlspecialchars($error) ?>
                 </div>
             <?php endif; ?>
 
@@ -89,15 +99,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 <div class="form-group">
                     <label for="password">كلمة المرور</label>
-                    <div class="pass-wrap">
-                        <input
-                            type="password"
-                            id="password"
-                            name="password"
-                            placeholder="••••••••"
-                        >
-                        <button type="button" id="togglePass" title="إظهار / إخفاء">👁️</button>
-                    </div>
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="••••••••"
+                    >
                     <span class="field-error" id="passwordErr"></span>
                 </div>
 
@@ -109,7 +116,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <!-- ===== Footer ===== -->
     <footer class="footer">
-        <p>© اكتشف السعودية &mdash; جامعة الملك سعود</p>
+        <p>&#169; اكتشف السعودية &mdash; جامعة الملك سعود</p>
     </footer>
 
     <script src="script.js"></script>
