@@ -43,9 +43,12 @@ footer {
     padding: 15px;
     border-radius: 8px;
     border-right: 5px solid #c53030;
+    border-right: 5px solid #c53030;
     margin-bottom: 20px;
     text-align: center;
     font-weight: bold;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    display: block; /* لضمان أخذ المساحة كاملة */
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     display: block; /* لضمان أخذ المساحة كاملة */
 }

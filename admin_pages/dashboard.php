@@ -37,13 +37,49 @@ if ($regionsResult) {
     }
 }
 $regionCount = count($regions);
+
+include("../database_connection.php");
+
+// ── Handle DELETE ──────────────────────────────────────────────
+$deleteMessage = '';
+if (isset($_GET['delete_id']) && is_numeric($_GET['delete_id'])) {
+    $del_id = (int) $_GET['delete_id'];
+    try {
+        mysqli_query($conn, "DELETE FROM Landmarks WHERE region_id = $del_id");
+        mysqli_query($conn, "DELETE FROM Activities WHERE region_id = $del_id");
+        mysqli_query($conn, "DELETE FROM Images    WHERE region_id = $del_id");
+        $result = mysqli_query($conn, "DELETE FROM Regions WHERE region_id = $del_id");
+        if ($result && mysqli_affected_rows($conn) > 0) {
+            $deleteMessage = 'success';
+        } else {
+            $deleteMessage = 'fail';
+        }
+    } catch (Exception $e) {
+        $deleteMessage = 'fail';
+    }
+}
+
+// ── Fetch all regions ──────────────────────────────────────────
+$regions = [];
+$regionsResult = mysqli_query($conn, "SELECT region_id, region_name, nature, location, headline FROM Regions ORDER BY region_id ASC");
+if ($regionsResult) {
+    while ($row = mysqli_fetch_assoc($regionsResult)) {
+        $regions[] = $row;
+    }
+}
+$regionCount = count($regions);
 ?>
 <!DOCTYPE html>
+<html lang="ar" dir="rtl">
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>لوحة تحكم المشرف</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../Dashboard.css">
     <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="../Dashboard.css">
 </head>
@@ -51,7 +87,16 @@ $regionCount = count($regions);
 <body>
 
     <!-- ===== Header (same as other admin pages) ===== -->
+    <!-- ===== Header (same as other admin pages) ===== -->
     <header>
+        <nav>
+            <ul>
+                <li><a href="dashboard.php">لوحة تحكم المشرف</a></li>
+                <li><a href="addContent.php">إضافة منطقة</a></li>
+                <li><a href="../public_pages/regionsGallary.php">معرض المناطق</a></li>
+                <li><a href="AdminLogin.php">تسجيل خروج</a></li>
+            </ul>
+        </nav>
         <nav>
             <ul>
                 <li><a href="dashboard.php">لوحة تحكم المشرف</a></li>
@@ -157,6 +202,21 @@ $regionCount = count($regions);
         </div>
     </div>
 
+    <!-- ===== Delete Confirmation Modal ===== -->
+    <div class="modal-overlay" id="deleteModal">
+        <div class="modal-box">
+            <div class="modal-icon">⚠️</div>
+            <h3>تأكيد الحذف</h3>
+            <p>هل تريد حذف هذا السجل؟<br><strong id="regionNameInModal"></strong></p>
+            <div class="modal-actions">
+                <a href="#" id="confirmDeleteBtn" class="btn-confirm-delete">نعم، احذف</a>
+                <button class="btn-cancel" onclick="closeModal()">إلغاء</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>استكشف جمال المملكة &copy; 2026</p>
     <footer>
         <p>استكشف جمال المملكة &copy; 2026</p>
     </footer>

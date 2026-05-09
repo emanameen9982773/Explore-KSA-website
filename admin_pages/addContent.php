@@ -20,10 +20,10 @@
     <main class="admin-form-container">
         <?php 
         if (isset($_GET['error']) && $_GET['error'] == 'duplicate') {
-           echo '<div  class="alert">عذراً، هذه المنطقة موجود مسبقاً!</div>';
+           echo '<div  id="alert-msg" class="alert-error"">عذراً، هذه المنطقة موجود مسبقاً!</div>';
         }
         elseif(isset($_GET['success']) && $_GET['success'] == 0)
-            echo '<div  id="alert-error" class="alert">عذراً، فشلت عملية الاضافة !</div>';            
+            echo '<div  id="alert-msg" class="alert-error">عذراً، فشلت عملية الاضافة !</div>';            
         ?>
         <h1>إضافة منطقة جديدة</h1>
         <p>ادخل معلومات المنطقة:</p>
